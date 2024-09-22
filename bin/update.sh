@@ -17,8 +17,8 @@ counter=0
 # Let's get started
 echo "[-] Update metadata with language ${LANGUAGE}"
 
-# Create the directory if it doesn't exist
-mkdir -p "${BASE_DIRECTORY}"
+# Reset the directory for legacy product removal
+rm -rf "${BASE_DIRECTORY}" && mkdir -p "${BASE_DIRECTORY}"
 
 # Update product list
 echo "[-] Updating product list"
@@ -26,14 +26,15 @@ curl -s "${BASE_URL}/meta/v1/products.json?language=${LANGUAGE}" -o "$PRODUCT_FI
 
 # Update individual APIs
 jq -c '.[]' "$PRODUCT_FILE" | while read -r product; do
-  # Extract the product code, in lowercase
-  code=$(echo "$product" | jq -r '.code' | tr "[:upper:]" "[:lower:]")
+  # Extract the product code
+  code=$(echo "$product" | jq -r '.code')
+  code_lowercase=$(echo "$code" | tr "[:upper:]" "[:lower:]")
 
   # Loop through each version for the current product
   for version in $(echo "$product" | jq -r '.versions[]'); do
     api_docs_url="${BASE_URL}/meta/v1/products/${code}/versions/${version}/api-docs.json?language=${LANGUAGE}"
 
-    output_directory="${BASE_DIRECTORY}/${code}/${version}"
+    output_directory="${BASE_DIRECTORY}/${code_lowercase}/${version}"
     output_file="${output_directory}/api-docs.json"
 
     # Create the directory if it doesn't exist
