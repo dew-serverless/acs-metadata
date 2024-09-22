@@ -1,0 +1,8 @@
+* text=auto
+
+.editorconfig   export-ignore
+.gitattributes  export-ignore
+/.github        export-ignore
+
+/en_us linguist-vendored
+/zh_cn linguist-vendored

@@ -1,0 +1,76 @@
+name: Update Metadata
+
+on:
+  schedule:
+    - cron: "23 4 * * sat"  # At 04:23 on Saturday
+  pull_request:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Update metadata (en)
+        run: bash bin/update.sh
+        env:
+          LANGUAGE: EN_US
+          CONCURRENCY: 4
+
+      - name: Commit changes if needed
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git add .
+            git commit -m "update metadata (en)"
+          fi
+
+      - name: Update metadata (zh)
+        run: bash bin/update.sh
+        env:
+          LANGUAGE: ZH_CN
+          CONCURRENCY: 4
+
+      - name: Commit changes if needed
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git add .
+            git commit -m "update metadata (zh)"
+          fi
+
+      - name: Retrieve current date
+        id: current-date
+        run: |
+          echo "yyyymmdd=$(date '+%Y%m%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Update metadata version
+        run: |
+          echo "${{ steps.current-date.outputs.yyyymmdd }}" > VERSION
+          git add VERSION
+          git commit -m "update version"
+
+      - name: Create a Pull Request
+        run: |
+          if ! git diff --quiet $GITHUB_SHA..HEAD; then
+            NOW="${{ steps.current-date.outputs.yyyymmdd }}"
+            git branch update-metadata-$NOW
+            git push origin update-metadata-$NOW
+            gh pr create \
+              --base main \
+              --head update-metadata-$NOW \
+              --title "Update OpenAPI metadata $NOW" \
+              --body "Here are the API changes during the week, check the metadata and update with the latest Alibaba Cloud APIs."
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_SHA: ${{ github.sha }}

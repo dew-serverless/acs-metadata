@@ -17,8 +17,8 @@ counter=0
 # Let's get started
 echo "[-] Update metadata with language ${LANGUAGE}"
 
-# Create the directory if it doesn't exist
-mkdir -p "${BASE_DIRECTORY}"
+# Reset the directory for legacy product removal
+rm -rf "${BASE_DIRECTORY}" && mkdir -p "${BASE_DIRECTORY}"
 
 # Update product list
 echo "[-] Updating product list"
