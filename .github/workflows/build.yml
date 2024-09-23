@@ -44,4 +44,4 @@ jobs:
           # Upload an asset to the release
           gh release upload ${{ github.event.release.tag_name}} $ARTIFACT_PATH
         env:
-          GH_TOKEN: ${{ secrets.PAT }}
+          GH_TOKEN: ${{ github.token }}
