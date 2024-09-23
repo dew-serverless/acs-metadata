@@ -8,6 +8,7 @@ jobs:
   php:
     name: Build PHP
     runs-on: ubuntu-latest
+    if: ${{ hashFiles('VERSION') != '' }}
 
     permissions:
       contents: write
