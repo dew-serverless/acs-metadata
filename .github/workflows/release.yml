@@ -24,4 +24,4 @@ jobs:
             --title "v1.0.0 OpenAPI metadata ${VERSION}" \
             --generate-notes
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PAT }}
