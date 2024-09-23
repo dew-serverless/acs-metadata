@@ -40,7 +40,7 @@ jobs:
         run: |
           ARTIFACT_PATH="${{ runner.temp }}/php.tar.gz"
           # Pack the artifact
-          tar -czvf $ARTIFACT_PATH "${{ steps.build-preparation.outputs.build_dir }}"
+          tar -czvf $ARTIFACT_PATH -C "${{ steps.build-preparation.outputs.build_dir }}" .
           # Upload an asset to the release
           gh release upload ${{ github.event.release.tag_name}} $ARTIFACT_PATH
         env:
