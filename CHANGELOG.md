@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.0]
+
 ### Added
 
 - Organized API metadata using the structured path format: `<lang>/<product>/<version>/api-docs.json`
@@ -17,4 +19,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The `<product>` values are extracted from the `code` field in the items of `products.json`, normalized to lowercase
 - The _VERSION_ file reflects the last metadata update in `YYYYMMDD` format
 
-[unreleased]: https://github.com/dew-serverless/acs-metadata
+[unreleased]: https://github.com/dew-serverless/acs-metadata/compare/v1.0.0...HEAD
+[v1.0.0]: https://github.com/dew-serverless/acs-metadata/releases/tag/v1.0.0
