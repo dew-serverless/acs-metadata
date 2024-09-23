@@ -1,0 +1,47 @@
+name: Build Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  php:
+    name: Build PHP
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Install Dependencies
+        run: composer update --prefer-stable --no-interaction --no-progress --ansi
+        working-directory: ./build/php
+
+      - name: Prepare Build Directory
+        id: build-preparation
+        run: |
+          BUILD_DIR="${{ runner.temp }}/build_php"
+          mkdir $BUILD_DIR
+          echo "build_dir=$BUILD_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Build Artifact
+        run: |
+          php build/php/generate.php "${{ steps.build-preparation.outputs.build_dir }}"
+
+      - name: Upload Artifact
+        run: |
+          ARTIFACT_PATH="${{ runner.temp }}/php.tar.gz"
+          # Pack the artifact
+          tar -czvf $ARTIFACT_PATH "${{ steps.build-preparation.outputs.build_dir }}"
+          # Upload an asset to the release
+          gh release upload ${{ github.event.release.tag_name}} $ARTIFACT_PATH
+        env:
+          GH_TOKEN: ${{ github.token }}
