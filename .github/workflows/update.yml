@@ -3,6 +3,7 @@ name: Update Metadata
 on:
   schedule:
     - cron: "23 4 * * sat"  # At 04:23 on Saturday
+  workflow_dispatch:
 
 jobs:
   update:
