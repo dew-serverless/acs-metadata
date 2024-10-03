@@ -55,8 +55,8 @@ jobs:
 
       - name: Update metadata version
         run: |
-          echo "${{ steps.current-date.outputs.yyyymmdd }}" > VERSION
-          git add VERSION
+          echo "${{ steps.current-date.outputs.yyyymmdd }}" > METADATA
+          git add METADATA
           git commit -m "update version"
 
       - name: Create a Pull Request

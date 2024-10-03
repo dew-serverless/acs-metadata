@@ -20,8 +20,9 @@ jobs:
         if: ${{ hashFiles('VERSION') != '' }}
         run: |
           VERSION="$(cat VERSION)"
-          gh release create v1.0.0+$VERSION \
-            --title "v1.0.0 OpenAPI metadata ${VERSION}" \
+          METADATA="$(cat METADATA)"
+          gh release create v$VERSION+$METADATA\
+            --title "v${VERSION} OpenAPI metadata ${METADATA}" \
             --generate-notes
         env:
           GH_TOKEN: ${{ secrets.PAT }}

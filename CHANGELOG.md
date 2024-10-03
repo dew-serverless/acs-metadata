@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Renamed `product.json`, which contains a list of products, to `products.json` https://github.com/dew-serverless/acs-metadata/pull/17
+- Included `VERSION` and `METADATA` files in the PHP archive https://github.com/dew-serverless/acs-metadata/pull/19
 
 ## [v1.0.0] - 2024-09-23
 
