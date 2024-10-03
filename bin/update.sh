@@ -8,7 +8,7 @@ LANGUAGE=${LANGUAGE:-"EN_US"}
 
 # Group metadata files by language, in lowercase
 BASE_DIRECTORY=$(echo "${LANGUAGE}" | tr "[:upper:]" "[:lower:]")
-PRODUCT_FILE="${BASE_DIRECTORY}/product.json"
+PRODUCTS_FILE="${BASE_DIRECTORY}/products.json"
 
 # Speed up the update process
 CONCURRENCY=${CONCURRENCY:-8}
@@ -22,10 +22,10 @@ rm -rf "${BASE_DIRECTORY}" && mkdir -p "${BASE_DIRECTORY}"
 
 # Update product list
 echo "[-] Updating product list"
-curl -s "${BASE_URL}/meta/v1/products.json?language=${LANGUAGE}" -o "$PRODUCT_FILE"
+curl -s "${BASE_URL}/meta/v1/products.json?language=${LANGUAGE}" -o "$PRODUCTS_FILE"
 
 # Update individual APIs
-jq -c '.[]' "$PRODUCT_FILE" | while read -r product; do
+jq -c '.[]' "$PRODUCTS_FILE" | while read -r product; do
   # Extract the product code
   code=$(echo "$product" | jq -r '.code')
   code_lowercase=$(echo "$code" | tr "[:upper:]" "[:lower:]")
