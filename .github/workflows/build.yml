@@ -35,6 +35,7 @@ jobs:
       - name: Build Artifact
         run: |
           php build/php/generate.php "${{ steps.build-preparation.outputs.build_dir }}"
+          cp VERSION METADATA "${{ steps.build-preparation.outputs.build_dir }}"
 
       - name: Upload Artifact
         run: |
