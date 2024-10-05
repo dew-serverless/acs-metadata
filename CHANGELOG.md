@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.1.0] - 2024-10-05
+
 ### Changed
 
 - Renamed `product.json`, which contains a list of products, to `products.json` https://github.com/dew-serverless/acs-metadata/pull/17
@@ -24,5 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The `<product>` values are extracted from the `code` field in the items of `products.json`, normalized to lowercase
 - The _VERSION_ file reflects the last metadata update in `YYYYMMDD` format
 
-[unreleased]: https://github.com/dew-serverless/acs-metadata/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/dew-serverless/acs-metadata/compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/dew-serverless/acs-metadata/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/dew-serverless/acs-metadata/releases/tag/v1.0.0
